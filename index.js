@@ -4,13 +4,13 @@ const token     = '5353840878:AAHPBxLX-TiYeZZQmnk2v8kEG4eA-ST4JpM';
 const bot       = new TelegramBot(token, {polling: true});
 const siteUrl   = 'https://fantastic-biscotti-957864.netlify.app/';
 
-const {addUser} = require('./src/FireBase');
+// const {addUser} = require('./src/FireBase');
 const {phones}  = require('./src/Base');
 
-bot.onText(/\/start/, async(msg, match) => {
-    const {from} = msg;
-    await addUser(from);
-});
+// bot.onText(/\/start/, async(msg, match) => {
+//     const {from} = msg;
+//     await addUser(from);
+// });
 
 bot.onText(/\iPhone (\d+)/, async (msg, match) => {
 
