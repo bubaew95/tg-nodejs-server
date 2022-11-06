@@ -4,6 +4,13 @@ const token     = '5353840878:AAHPBxLX-TiYeZZQmnk2v8kEG4eA-ST4JpM';
 const bot       = new TelegramBot(token, {polling: true});
 const siteUrl   = 'https://fantastic-biscotti-957864.netlify.app/';
 
+bot.setMyCommands([
+    {
+        command: '/phones',
+        description: 'Список телефонов'
+    }
+])
+
 // const {addUser} = require('./src/FireBase');
 const {phones}  = require('./src/Base');
 
@@ -81,15 +88,18 @@ bot.on("callback_query", async (msg) => {
 
 bot.onText(/\/телефоны/, async (msg, match) => {
     const chatId = msg.chat.id;
-    console.log(msg.text);
+    
+    let keyboardButtons = phones.map(item => {
+        return [{
+            text: item.text
+        }];
+    });
+
+    keyboardButtons.push([{text: 'Запустить приложение', web_app: {url: `${siteUrl}?id=${msg.from.id}`}}])
 
     return await bot.sendMessage(chatId, "Телефоны", {
         reply_markup: {
-            keyboard: phones.map(item => {
-                return [{
-                    text: item.text
-                }];
-            }),
+            keyboard: keyboardButtons,
             resize_keyboard: true
         }
     });
